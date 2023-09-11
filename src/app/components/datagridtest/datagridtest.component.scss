@@ -1,0 +1,124 @@
+::ng-deep #gridContainer .dx-datagrid-header-panel {
+  padding: 0;
+}
+
+::ng-deep #gridContainer .dx-datagrid-header-panel .dx-toolbar {
+  margin: 0;
+  padding-right: 20px;
+  background-color: transparent;
+}
+
+::ng-deep #gridContainer .dx-datagrid-header-panel .dx-toolbar-items-container {
+  height: 70px;
+}
+
+::ng-deep
+  #gridContainer
+  .dx-datagrid-header-panel
+  .dx-toolbar-before
+  .dx-toolbar-item:last-child {
+  padding-right: 10px;
+}
+
+::ng-deep #gridContainer .dx-datagrid-header-panel .dx-selectbox {
+  margin: auto 10px;
+}
+
+::ng-deep #gridContainer .dx-datagrid-header-panel .dx-button {
+  margin: auto 0;
+}
+
+::ng-deep #gridContainer .informer {
+  height: 70px;
+  width: 130px;
+  text-align: center;
+  color: #fff;
+}
+
+::ng-deep #gridContainer .count {
+  padding-top: 15px;
+  line-height: 27px;
+  font-size: 28px;
+  margin: 0;
+}
+
+::ng-deep .save {
+  background-color: #4caf50 !important;
+  color: white !important;
+  border: none !important;
+  padding: 8px 16px !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  text-indent: -2.5px !important;
+  width: 55px !important;
+  display: inline-block !important;
+  margin: 4px 2px !important;
+  cursor: pointer !important;
+  border-radius: 4px !important;
+}
+
+::ng-deep .save:hover {
+  background-color: #45a049 !important;
+}
+
+::ng-deep .delete {
+  background-color: #f44336 !important;
+  color: white !important;
+  border: none !important;
+  padding: 8px 16px !important;
+  width: 71px !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  margin: 4px 2px !important;
+  cursor: pointer !important;
+  border-radius: 4px !important;
+}
+
+::ng-deep .delete:hover {
+  background-color: #d32f2f !important;
+}
+
+::ng-deep .edit {
+  background-color: #808080 !important;
+  color: white !important;
+  border: none !important;
+  padding: 8px 16px !important;
+  width: 55px !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  margin: 4px 2px !important;
+  cursor: pointer !important;
+  border-radius: 4px !important;
+}
+
+::ng-deep .edit:hover {
+  background-color: #666666 !important;
+}
+
+::ng-deep .cancel {
+  background-color: #808080 !important;
+  color: white !important;
+  border: none !important;
+  padding: 8px 16px !important;
+  width: 71px !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  margin: 4px 2px !important;
+  cursor: pointer !important;
+  border-radius: 4px !important;
+}
+
+::ng-deep .cancel:hover {
+  background-color: #666666 !important;
+}
+
+::ng-deep .dx-data-row > td {
+  vertical-align: middle !important;
+}
+
+#tasksContainer {
+  margin-top: 1rem;
+}

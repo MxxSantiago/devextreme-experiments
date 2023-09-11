@@ -1,0 +1,129 @@
+{
+  "people": [
+    {
+      "id": 2,
+      "name": "Maria Rodriguez",
+      "age": 28,
+      "nationality": "Mexican",
+      "phoneNumber": "987-654-3210"
+    },
+    {
+      "id": 3,
+      "name": "Satoshi Tanaka",
+      "age": 45,
+      "nationality": "Japanese",
+      "phoneNumber": "999-999-9999"
+    },
+    {
+      "id": 4,
+      "name": "Elena Petrova",
+      "age": 35,
+      "nationality": "Russian",
+      "phoneNumber": "777-888-9999"
+    },
+    {
+      "id": 5,
+      "name": "Diego Fernandez",
+      "age": 29,
+      "nationality": "Argentinian",
+      "phoneNumber": "333-222-1111"
+    },
+    {
+      "id": 6,
+      "name": "Sophie Dupont",
+      "age": 32,
+      "nationality": "French",
+      "phoneNumber": "555-444-3333"
+    },
+    {
+      "id": 7,
+      "name": "Luisa Silva",
+      "age": 40,
+      "nationality": "Brazilian",
+      "phoneNumber": "222-333-4444"
+    },
+    {
+      "id": 8,
+      "name": "Rajesh Patel",
+      "age": 27,
+      "nationality": "Indian",
+      "phoneNumber": "111-222-3333"
+    },
+    {
+      "id": 9,
+      "name": "Marta Gonzalez",
+      "age": 31,
+      "nationality": "Spanish",
+      "phoneNumber": "666-555-4444"
+    },
+    {
+      "id": 1694330678430,
+      "name": "Chen Wei",
+      "age": 30,
+      "nationality": "BLG",
+      "phoneNumber": "999-888-7777"
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "content": "Task for Maria Rodriguez",
+      "status": "PENDING",
+      "personId": 2
+    },
+    {
+      "id": 11,
+      "content": "Task for Maria Rodriguez 2",
+      "status": "COMPLETED",
+      "personId": 2
+    },
+    {
+      "id": 2,
+      "content": "Task for Satoshi Tanaka",
+      "status": "PENDING",
+      "personId": 3
+    },
+    {
+      "id": 3,
+      "content": "Task for Elena Petrova",
+      "status": "PENDING",
+      "personId": 4
+    },
+    {
+      "id": 4,
+      "content": "Task for Diego Fernandez",
+      "status": "PENDING",
+      "personId": 5
+    },
+    {
+      "id": 5,
+      "content": "Task for Sophie Dupont",
+      "status": "PENDING",
+      "personId": 6
+    },
+    {
+      "id": 6,
+      "content": "Task for Luisa Silva",
+      "status": "PENDING",
+      "personId": 7
+    },
+    {
+      "id": 7,
+      "content": "Task for Rajesh Patel",
+      "status": "PENDING",
+      "personId": 8
+    },
+    {
+      "id": 8,
+      "content": "Task for Marta Gonzalez",
+      "status": "PENDING",
+      "personId": 9
+    },
+    {
+      "id": 9,
+      "content": "Task for Chen Wei",
+      "status": "PENDING",
+      "personId": 1694330678430
+    }
+  ]
+}

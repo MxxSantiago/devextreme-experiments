@@ -1,0 +1,100 @@
+<div id="gridContainer">
+  <dx-data-grid
+    #grid
+    keyExpr="id"
+    [dataSource]="persons"
+    [showBorders]="true"
+    [showRowLines]="true"
+    [width]="'750px'"
+    [focusedRowEnabled]="true"
+    (onFocusedRowChanged)="onFocusedRowChanged($event)"
+    (onInitNewRow)="onInitNewRow($event)"
+    (onRowInserted)="onRowInserted()"
+    (onRowInserting)="onRowInserting($event)"
+    (onRowRemoving)="onRowRemoving($event)"
+    (onRowRemoved)="onRowRemoved()"
+    (onRowUpdating)="onRowUpdating($event)"
+    (onRowUpdated)="onRowUpdated()"
+    [repaintChangesOnly]="true"
+    [highlightChanges]="true"
+    [hoverStateEnabled]="true"
+  >
+    <dxo-load-panel [enabled]="true" />
+    <dxo-editing
+      [allowUpdating]="true"
+      [allowAdding]="true"
+      [allowDeleting]="true"
+    ></dxo-editing>
+
+    <dxi-column type="buttons">
+      <dxi-button name="save" cssClass="save"> </dxi-button>
+      <dxi-button name="edit" cssClass="edit"></dxi-button>
+      <dxi-button name="delete" cssClass="delete"></dxi-button>
+      <dxi-button name="cancel" cssClass="cancel"></dxi-button>
+    </dxi-column>
+
+    <dxi-column
+      alignment="center"
+      dataField="name"
+      caption="Name"
+      [width]="30 + '%'"
+    >
+      <dxi-validation-rule type="required" />
+      <dxi-validation-rule
+        type="stringLength"
+        [trim]="true"
+        [max]="50"
+        message="Max length 50"
+      />
+      <dxi-validation-rule
+        type="stringLength"
+        [trim]="true"
+        [min]="2"
+        message="Min length 2"
+      />
+      <dxi-validation-rule
+        type="pattern"
+        [pattern]="namePattern"
+        message="Do not use digits in the name"
+      />
+    </dxi-column>
+
+    <dxi-column
+      alignment="center"
+      dataField="phoneNumber"
+      caption="Phone number"
+      [width]="25 + '%'"
+    >
+      <dxi-validation-rule type="required" />
+      <dxi-validation-rule
+        type="pattern"
+        [pattern]="phoneNumberPattern"
+        message="Invalid phone number"
+      ></dxi-validation-rule>
+    </dxi-column>
+
+    <dxi-column
+      [allowEditing]="false"
+      [width]="8 + '%'"
+      alignment="center"
+      dataField="age"
+      caption="Age"
+      dataType="number"
+      [ariaReadOnly]="true"
+    >
+      <dxi-validation-rule type="required"></dxi-validation-rule
+    ></dxi-column>
+
+    <dxi-column
+      alignment="center"
+      [allowEditing]="false"
+      dataField="nationality"
+      [width]="15 + '%'"
+      caption="Nationality"
+      ><dxi-validation-rule type="required"></dxi-validation-rule
+    ></dxi-column>
+  </dx-data-grid>
+  <div id="tasksContainer">
+    <app-person-tasks [personId]="currentPerson?.id ?? null" />
+  </div>
+</div>
