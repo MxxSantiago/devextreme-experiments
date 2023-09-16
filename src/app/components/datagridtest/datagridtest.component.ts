@@ -1,5 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { DxDataGridComponent } from 'devextreme-angular';
+import {
+  DxDataGridComponent,
+  DxFormComponent,
+  DxPopupComponent,
+  DxValidationGroupComponent,
+} from 'devextreme-angular';
 import { Person } from 'src/app/models/person';
 import { PersonService } from 'src/app/services/person.service';
 
@@ -12,6 +17,7 @@ export class DatagridtestComponent {
   @ViewChild(DxDataGridComponent) dataGrid!: DxDataGridComponent;
 
   persons: Person[] = [];
+  selectedRows: number[] = [];
 
   defaultPerson = Person.create('Kevin', 30, 'BLG', '111-666-7777');
   currentPerson: Person | null = null;
@@ -19,8 +25,76 @@ export class DatagridtestComponent {
   namePattern = /^[^0-9]+$/;
   phoneNumberPattern = /^\d{3}-\d{3}-\d{4}$/;
 
+  @ViewChild('modal', { static: false }) modal!: DxPopupComponent;
+  @ViewChild(DxFormComponent, { static: false }) form!: DxFormComponent;
+  @ViewChild(DxValidationGroupComponent, { static: false })
+  validationGroup!: DxValidationGroupComponent;
+  submitButtonOptions: any;
+  Object = Object;
+  isFormValid: boolean = false;
+
+  isModalVisible: boolean = false;
+  formData: any = Person.default();
+
+  editableFields: { [key: string]: boolean } = {
+    name: true,
+    age: true,
+    nationality: true,
+    phoneNumber: true,
+  };
+
+  toggleEditableField(fieldName: string) {
+    this.editableFields[fieldName] = !this.editableFields[fieldName];
+  }
+
+  showModal() {
+    this.isModalVisible = true;
+  }
+
+  onModalHidden() {
+    this.isModalVisible = false;
+  }
+
+  cancelChanges() {
+    this.isModalVisible = false;
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.formData = {};
+    this.form.instance.resetValues();
+    this.isFormValid = false;
+  }
+
   constructor(private readonly service: PersonService) {
     service.get().subscribe((data) => (this.persons = data));
+
+    var that = this;
+
+    this.submitButtonOptions = {
+      text: 'Submit',
+      onClick(e: any) {
+        // if the propertie is not editable, then it will be sended with a null value
+        const submitData = Object.keys(that.editableFields).reduce(
+          (acc: any, key) => {
+            if (that.editableFields[key]) {
+              acc[key] = that.formData[key];
+            }
+            return acc;
+          },
+          {}
+        );
+
+        const data = {
+          keys: that.selectedRows,
+          formValues: submitData,
+        };
+        console.log(data);
+        that.dataGrid.instance.clearSelection();
+        that.isModalVisible = false;
+        that.form.instance.resetValues();
+      },
+    };
   }
 
   onFocusedRowChanged(e: any) {
@@ -85,5 +159,9 @@ export class DatagridtestComponent {
 
   onRowUpdated() {
     console.log('Person updated!!');
+  }
+
+  selectionChangedHandler() {
+    console.log(this.selectedRows);
   }
 }

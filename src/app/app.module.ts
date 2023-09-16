@@ -9,21 +9,39 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   DxBulletModule,
   DxButtonModule,
+  DxCheckBoxModule,
   DxDataGridModule,
+  DxFormModule,
   DxLoadPanelModule,
+  DxPopupModule,
   DxSelectBoxModule,
   DxTemplateModule,
   DxTextBoxModule,
   DxToolbarModule,
+  DxValidationGroupModule,
+  DxValidationSummaryModule,
+  DxValidatorModule,
 } from 'devextreme-angular';
 import { DatagridtestComponent } from './components/datagridtest/datagridtest.component';
 import { PersonTasksComponent } from './components/person-tasks/person-tasks.component';
+import {
+  DxoFormItemModule,
+  DxoNotificationsModule,
+} from 'devextreme-angular/ui/nested';
 
 @NgModule({
   declarations: [AppComponent, DatagridtestComponent, PersonTasksComponent],
   imports: [
     BrowserModule,
+    DxPopupModule,
+    DxFormModule,
+    DxValidationSummaryModule,
+    DxValidationGroupModule,
+    DxValidatorModule,
+    DxCheckBoxModule,
+    DxoFormItemModule,
     DxDataGridModule,
+    DxoNotificationsModule,
     DxBulletModule,
     DxTextBoxModule,
     DxTemplateModule,
