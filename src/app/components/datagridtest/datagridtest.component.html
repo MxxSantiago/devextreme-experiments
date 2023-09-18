@@ -15,7 +15,6 @@
     (onRowRemoved)="onRowRemoved()"
     (onRowUpdating)="onRowUpdating($event)"
     (onRowUpdated)="onRowUpdated()"
-    (onSelectionChanged)="selectionChangedHandler()"
     [(selectedRowKeys)]="selectedRows"
     [repaintChangesOnly]="true"
     [highlightChanges]="true"
@@ -105,50 +104,66 @@
   <dx-popup
     [visible]="isModalVisible"
     [title]="'Mass update people'"
-    [width]="400"
-    [height]="600"
+    [width]="500"
+    [height]="'550px'"
     (onHidden)="onModalHidden()"
   >
-    <dx-form [formData]="formData">
-      <dxi-item dataField="name">
-        <dx-check-box (onValueChanged)="toggleEditableField('name')" />
-        <dxo-label location="top" text="Name" />
-        <dx-text-box
-          [readOnly]="!editableFields['name']"
-          [(value)]="formData.name"
-          [labelMode]="'always'"
+    <dx-form [formData]="formData" labelMode="'hidden'">
+      <dxi-item>
+        <dx-check-box
+          [value]="isAllEditableChecked()"
+          (onValueChanged)="toggleAllEditableFields($event)"
+          class="custom-checkbox"
         />
       </dxi-item>
-      <dxi-item dataField="age">
-        <dx-check-box (onValueChanged)="toggleEditableField('age')" />
-        <dxo-label location="top" text="Age" />
-        <dx-text-box
-          [readOnly]="!editableFields['age']"
-          [(value)]="formData.age"
-        />
+      <dxi-item dataField="name" class="custom-layout">
+        <dx-check-box name="a"  [value]="editableFields['name']" (onValueChanged)="toggleEditableField($event, 'name')" class="custom-checkbox" />
+        <div>
+          <p>Name:</p>
+          <dx-text-box
+            class="custom-textbox"
+            [readOnly]="!editableFields['name']"
+            [(value)]="formData.name"
+          />
+        </div>
       </dxi-item>
-      <dxi-item dataField="nationality">
-        <dx-check-box (onValueChanged)="toggleEditableField('nationality')" />
-        <dxo-label location="top" text="Nationality" />
-        <dx-text-box
-          [readOnly]="!editableFields['nationality']"
-          [(value)]="formData.nationality"
-        />
+      <dxi-item dataField="age" class="custom-layout">
+        <dx-check-box [value]="editableFields['age']" (onValueChanged)="toggleEditableField($event, 'age')" class="custom-checkbox" />
+        <div>
+          <p>Age:</p>
+          <dx-text-box
+            [readOnly]="!editableFields['age']"
+            [(value)]="formData.age"
+          />
+        </div>
       </dxi-item>
-      <dxi-item dataField="phoneNumber">
-        <dx-check-box (onValueChanged)="toggleEditableField('phoneNumber')" />
-        <dxo-label location="top" text="Phone Number" />
-        <dx-text-box
-          [readOnly]="!editableFields['phoneNumber']"
-          [(value)]="formData.phoneNumber"
-        />
+      <dxi-item dataField="nationality" class="custom-layout">
+        <dx-check-box [value]="editableFields['nationality']" (onValueChanged)="toggleEditableField($event, 'nationality')" class="custom-checkbox" />
+        <div>
+          <p>Nationality:</p>
+          <dx-select-box
+            [items]="nationalities"
+            [(value)]="formData.nationality"
+            [readOnly]="!editableFields['nationality']"
+          ></dx-select-box>
+        </div>
+      </dxi-item>
+      <dxi-item dataField="phoneNumber" class="custom-layout">
+        <dx-check-box [value]="editableFields['phoneNumber']" (onValueChanged)="toggleEditableField($event, 'phoneNumber')" class="custom-checkbox" />
+        <div>
+          <p>Phone Number:</p>
+          <dx-text-box
+            [readOnly]="!editableFields['phoneNumber']"
+            [(value)]="formData.phoneNumber"
+          />
+        </div>
       </dxi-item>
     </dx-form>
 
     <dxi-toolbar-item
       widget="dxButton"
       toolbar="bottom"
-      [disabled]="isFormValid"
+      [disabled]="!isFormValid"
       [options]="submitButtonOptions"
     />
   </dx-popup>

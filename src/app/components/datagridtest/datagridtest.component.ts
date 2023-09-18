@@ -5,7 +5,7 @@ import {
   DxPopupComponent,
   DxValidationGroupComponent,
 } from 'devextreme-angular';
-import { Person } from 'src/app/models/person';
+import { User, nationalities } from 'src/app/models/person';
 import { PersonService } from 'src/app/services/person.service';
 
 @Component({
@@ -16,25 +16,25 @@ import { PersonService } from 'src/app/services/person.service';
 export class DatagridtestComponent {
   @ViewChild(DxDataGridComponent) dataGrid!: DxDataGridComponent;
 
-  persons: Person[] = [];
+  persons: User[] = [];
   selectedRows: number[] = [];
 
-  defaultPerson = Person.create('Kevin', 30, 'BLG', '111-666-7777');
-  currentPerson: Person | null = null;
+  defaultPerson = User.create('Kevin', 30, 'BLG', '111-666-7777');
+  currentPerson: User | null = null;
 
   namePattern = /^[^0-9]+$/;
   phoneNumberPattern = /^\d{3}-\d{3}-\d{4}$/;
+
+  nationalities: nationalities[] = ['USA', 'MX', 'BLG'];
 
   @ViewChild('modal', { static: false }) modal!: DxPopupComponent;
   @ViewChild(DxFormComponent, { static: false }) form!: DxFormComponent;
   @ViewChild(DxValidationGroupComponent, { static: false })
   validationGroup!: DxValidationGroupComponent;
   submitButtonOptions: any;
-  Object = Object;
-  isFormValid: boolean = false;
-
+  isFormValid: boolean = true;
   isModalVisible: boolean = false;
-  formData: any = Person.default();
+  formData: any = User.default();
 
   editableFields: { [key: string]: boolean } = {
     name: true,
@@ -43,8 +43,42 @@ export class DatagridtestComponent {
     phoneNumber: true,
   };
 
-  toggleEditableField(fieldName: string) {
+  toggleEditableField(e: any, fieldName: string) {
+    if (e.event === undefined) return;
     this.editableFields[fieldName] = !this.editableFields[fieldName];
+    this.validateForm();
+  }
+
+  validateForm() {
+    const isOneEditableChecked = Object.values(this.editableFields).some(
+      (value) => value
+    );
+
+    this.isFormValid = isOneEditableChecked;
+
+    return this.isFormValid;
+  }
+
+  toggleAllEditableFields(e: any) {
+    if (e.event === undefined) return;
+    for (const fieldName in this.editableFields) {
+      if (this.editableFields.hasOwnProperty(fieldName)) {
+        this.editableFields[fieldName] = e.value;
+      }
+    }
+    this.validateForm();
+  }
+
+  isAllEditableChecked() {
+    for (const fieldName in this.editableFields) {
+      if (
+        this.editableFields.hasOwnProperty(fieldName) &&
+        !this.editableFields[fieldName]
+      ) {
+        return false;
+      }
+    }
+    return true;
   }
 
   showModal() {
@@ -66,30 +100,39 @@ export class DatagridtestComponent {
     this.isFormValid = false;
   }
 
+  loadUsers() {
+    this.service.get().subscribe((data) => (this.persons = data));
+  }
+
   constructor(private readonly service: PersonService) {
-    service.get().subscribe((data) => (this.persons = data));
+    this.loadUsers();
 
     var that = this;
 
     this.submitButtonOptions = {
       text: 'Submit',
       onClick(e: any) {
-        // if the propertie is not editable, then it will be sended with a null value
-        const submitData = Object.keys(that.editableFields).reduce(
-          (acc: any, key) => {
-            if (that.editableFields[key]) {
-              acc[key] = that.formData[key];
-            }
-            return acc;
-          },
-          {}
-        );
+        if (!that.validateForm()) return;
+        // if the property is not editable, then it will be sended with a null value
+        const submitData: any = {};
+        for (const key of Object.keys(that.editableFields)) {
+          submitData[key] = that.formData[key];
+        }
 
         const data = {
           keys: that.selectedRows,
           formValues: submitData,
         };
-        console.log(data);
+
+        that.service.massUpdate(data.formValues, data.keys).subscribe({
+          next() {
+            that.loadUsers();
+          },
+          error() {
+            e.cancel();
+          },
+        });
+
         that.dataGrid.instance.clearSelection();
         that.isModalVisible = false;
         that.form.instance.resetValues();
@@ -116,8 +159,8 @@ export class DatagridtestComponent {
       next() {
         console.log('Creating person..');
       },
-      error() {
-        e.cancel();
+      error(error) {
+        console.log(error);
       },
     });
   }
@@ -159,9 +202,5 @@ export class DatagridtestComponent {
 
   onRowUpdated() {
     console.log('Person updated!!');
-  }
-
-  selectionChangedHandler() {
-    console.log(this.selectedRows);
   }
 }

@@ -1,6 +1,6 @@
 export type nationalities = 'USA' | 'MX' | 'BLG';
 
-export class Person {
+export class User {
   id: number;
   name: string;
   phoneNumber: string;
@@ -26,8 +26,9 @@ export class Person {
     age: number,
     nationality: nationalities,
     phoneNumber: string
-  ): Person {
-    return new Person(Date.now(), name, age, nationality, phoneNumber);
+  ): User {
+    const randomInt = Math.round(Math.random() * 1000);
+    return new User(randomInt, name, age, nationality, phoneNumber);
   }
 
   public static default() {

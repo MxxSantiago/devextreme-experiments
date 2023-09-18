@@ -7,7 +7,7 @@ import { Task, status } from '../models/task';
   providedIn: 'root',
 })
 export class TaskService {
-  private apiURL = 'http://localhost:3000/tasks';
+  private apiURL = 'https://localhost:7111/Tasks';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export class TaskService {
   findTasksByPersonId(personId: number) {
     return this.http
       .get<Task[]>(this.apiURL)
-      .pipe(map((tasks) => tasks.filter((task) => task.personId === personId)));
+      .pipe(map((tasks) => tasks.filter((task) => task.userId === personId)));
   }
 
   createTask(content: string, status: status, personId: number) {

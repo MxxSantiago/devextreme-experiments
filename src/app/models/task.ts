@@ -4,7 +4,7 @@ export class Task {
   id: number;
   content: string;
   status: status;
-  personId: number;
+  userId: number;
 
   private constructor(
     id: number,
@@ -15,7 +15,7 @@ export class Task {
     this.id = id;
     this.content = content;
     this.status = status;
-    this.personId = personId;
+    this.userId = personId;
   }
 
   public static Create(
