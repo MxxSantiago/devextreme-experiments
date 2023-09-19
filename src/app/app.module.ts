@@ -28,9 +28,15 @@ import {
   DxoFormItemModule,
   DxoNotificationsModule,
 } from 'devextreme-angular/ui/nested';
+import { MassUpdatePopupComponent } from './components/mass-update-popup/mass-update-popup.component';
 
 @NgModule({
-  declarations: [AppComponent, DatagridtestComponent, PersonTasksComponent],
+  declarations: [
+    AppComponent,
+    DatagridtestComponent,
+    PersonTasksComponent,
+    MassUpdatePopupComponent,
+  ],
   imports: [
     BrowserModule,
     DxPopupModule,

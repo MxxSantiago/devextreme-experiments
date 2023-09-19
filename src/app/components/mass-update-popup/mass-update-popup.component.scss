@@ -1,0 +1,19 @@
+#tasksContainer {
+  margin-top: 1rem;
+}
+
+.custom-layout {
+  display: grid;
+  grid-template-columns: .25fr 2fr;
+}
+
+.custom-checkbox {
+  margin-top: auto;
+  margin-left: 5px;
+  margin-bottom: 8px;
+}
+
+p {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}

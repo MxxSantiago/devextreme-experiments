@@ -1,11 +1,7 @@
+import { MassUpdatePopupComponent } from './../mass-update-popup/mass-update-popup.component';
 import { Component, ViewChild } from '@angular/core';
-import {
-  DxDataGridComponent,
-  DxFormComponent,
-  DxPopupComponent,
-  DxValidationGroupComponent,
-} from 'devextreme-angular';
-import { User, nationalities } from 'src/app/models/person';
+import { DxDataGridComponent } from 'devextreme-angular';
+import { User } from 'src/app/models/person';
 import { PersonService } from 'src/app/services/person.service';
 
 @Component({
@@ -15,129 +11,26 @@ import { PersonService } from 'src/app/services/person.service';
 })
 export class DatagridtestComponent {
   @ViewChild(DxDataGridComponent) dataGrid!: DxDataGridComponent;
+  @ViewChild(MassUpdatePopupComponent, { static: false })
+  massUpdatePopupComponent!: MassUpdatePopupComponent;
 
-  persons: User[] = [];
-  selectedRows: number[] = [];
-
-  defaultPerson = User.create('Kevin', 30, 'BLG', '111-666-7777');
+  persons!: User[];
   currentPerson: User | null = null;
+  selectedRows: number[] = [];
 
   namePattern = /^[^0-9]+$/;
   phoneNumberPattern = /^\d{3}-\d{3}-\d{4}$/;
 
-  nationalities: nationalities[] = ['USA', 'MX', 'BLG'];
-
-  @ViewChild('modal', { static: false }) modal!: DxPopupComponent;
-  @ViewChild(DxFormComponent, { static: false }) form!: DxFormComponent;
-  @ViewChild(DxValidationGroupComponent, { static: false })
-  validationGroup!: DxValidationGroupComponent;
-  submitButtonOptions: any;
-  isFormValid: boolean = true;
-  isModalVisible: boolean = false;
-  formData: any = User.default();
-
-  editableFields: { [key: string]: boolean } = {
-    name: true,
-    age: true,
-    nationality: true,
-    phoneNumber: true,
-  };
-
-  toggleEditableField(e: any, fieldName: string) {
-    if (e.event === undefined) return;
-    this.editableFields[fieldName] = !this.editableFields[fieldName];
-    this.validateForm();
-  }
-
-  validateForm() {
-    const isOneEditableChecked = Object.values(this.editableFields).some(
-      (value) => value
-    );
-
-    this.isFormValid = isOneEditableChecked;
-
-    return this.isFormValid;
-  }
-
-  toggleAllEditableFields(e: any) {
-    if (e.event === undefined) return;
-    for (const fieldName in this.editableFields) {
-      if (this.editableFields.hasOwnProperty(fieldName)) {
-        this.editableFields[fieldName] = e.value;
-      }
-    }
-    this.validateForm();
-  }
-
-  isAllEditableChecked() {
-    for (const fieldName in this.editableFields) {
-      if (
-        this.editableFields.hasOwnProperty(fieldName) &&
-        !this.editableFields[fieldName]
-      ) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  showModal() {
-    this.isModalVisible = true;
-  }
-
-  onModalHidden() {
-    this.isModalVisible = false;
-  }
-
-  cancelChanges() {
-    this.isModalVisible = false;
-    this.resetForm();
-  }
-
-  resetForm() {
-    this.formData = {};
-    this.form.instance.resetValues();
-    this.isFormValid = false;
+  constructor(private readonly service: PersonService) {
+    this.loadUsers();
   }
 
   loadUsers() {
     this.service.get().subscribe((data) => (this.persons = data));
   }
 
-  constructor(private readonly service: PersonService) {
-    this.loadUsers();
-
-    var that = this;
-
-    this.submitButtonOptions = {
-      text: 'Submit',
-      onClick(e: any) {
-        if (!that.validateForm()) return;
-        // if the property is not editable, then it will be sended with a null value
-        const submitData: any = {};
-        for (const key of Object.keys(that.editableFields)) {
-          submitData[key] = that.formData[key];
-        }
-
-        const data = {
-          keys: that.selectedRows,
-          formValues: submitData,
-        };
-
-        that.service.massUpdate(data.formValues, data.keys).subscribe({
-          next() {
-            that.loadUsers();
-          },
-          error() {
-            e.cancel();
-          },
-        });
-
-        that.dataGrid.instance.clearSelection();
-        that.isModalVisible = false;
-        that.form.instance.resetValues();
-      },
-    };
+  showPoup() {
+    this.massUpdatePopupComponent.popup.instance.show(); // Mostrar el popup
   }
 
   onFocusedRowChanged(e: any) {
@@ -151,7 +44,7 @@ export class DatagridtestComponent {
   }
 
   onInitNewRow(e: any) {
-    e.data = this.defaultPerson;
+    e.data = User.default();
   }
 
   onRowInserting(e: any) {
