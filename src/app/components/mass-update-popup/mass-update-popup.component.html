@@ -1,11 +1,18 @@
-<dx-popup #popup [title]="'Mass update people'" [width]="500" [height]="'550px'">
+<dx-popup
+  #popup
+  [visible]="true"
+  [title]="'Mass update people'"
+  [width]="500"
+  [height]="575"
+>
   <dx-form [formData]="formData" labelMode="'hidden'">
-    <dxi-item>
+    <dxi-item class="custom-layout_editor_selectall">
       <dx-check-box
         [value]="isAllEditableChecked()"
         (onValueChanged)="toggleAllEditableFields($event)"
         class="custom-checkbox"
       />
+        <p>Select All</p>
     </dxi-item>
     <dxi-item dataField="name" class="custom-layout">
       <dx-check-box
@@ -14,7 +21,7 @@
         (onValueChanged)="toggleEditableField($event, 'name')"
         class="custom-checkbox"
       />
-      <div>
+      <div class="custom-layout_editor">
         <p>Name:</p>
         <dx-text-box
           class="custom-textbox"
@@ -29,9 +36,10 @@
         (onValueChanged)="toggleEditableField($event, 'age')"
         class="custom-checkbox"
       />
-      <div>
+      <div class="custom-layout_editor">
         <p>Age:</p>
         <dx-text-box
+          class="custom-textbox"
           [readOnly]="!editableFields['age']"
           [(value)]="formData.age"
         />
@@ -43,9 +51,10 @@
         (onValueChanged)="toggleEditableField($event, 'nationality')"
         class="custom-checkbox"
       />
-      <div>
+      <div class="custom-layout_editor">
         <p>Nationality:</p>
         <dx-select-box
+          class="custom-textbox"
           [items]="nationalities"
           [(value)]="formData.nationality"
           [readOnly]="!editableFields['nationality']"
@@ -58,11 +67,23 @@
         (onValueChanged)="toggleEditableField($event, 'phoneNumber')"
         class="custom-checkbox"
       />
-      <div>
+      <div class="custom-layout_editor">
         <p>Phone Number:</p>
         <dx-text-box
+          class="custom-textbox"
           [readOnly]="!editableFields['phoneNumber']"
           [(value)]="formData.phoneNumber"
+        />
+      </div>
+    </dxi-item>
+    <dxi-item class="custom-layout_textarea">
+      <dx-check-box class="custom-checkbox"/>
+      <div class="custom-layout_editor">
+        <p>Notes:</p>
+        <dx-text-area
+          class="custom-textbox"
+          height="100"
+          [maxLength]="250"
         />
       </div>
     </dxi-item>

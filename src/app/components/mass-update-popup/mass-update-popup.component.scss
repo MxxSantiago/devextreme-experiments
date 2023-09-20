@@ -10,10 +10,41 @@
 .custom-checkbox {
   margin-top: auto;
   margin-left: 5px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 p {
   margin-top: 10px;
   margin-bottom: 5px;
+}
+
+.custom-layout_editor {
+  display: grid;
+  grid-template-columns: .25fr 2fr;
+}
+
+.custom-textbox {
+  width: 300px;
+  margin-top: auto;
+  margin-left: auto;
+  margin-bottom: 8px;
+}
+
+.custom-layout_textarea {
+  display: grid;
+  grid-template-columns: .25fr 2fr;
+}
+
+.custom-layout_textarea > .custom-checkbox {
+  margin-top: 15px;
+  margin-bottom: auto;
+}
+
+.custom-layout_editor_selectall {
+  display: grid;
+  grid-template-columns: .25fr 2fr;
+}
+
+.custom-layout_editor_selectall > p {
+  margin-bottom: 15px;
 }
